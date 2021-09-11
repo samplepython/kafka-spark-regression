@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]  
+
+jobs:
+
+  Build-KafkaProducer:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Kafka-Producer/Dockerfile --tag my-image-name:$(date +%s)
+  Build-KafkaConsumer:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Kafka-Consumer/Dockerfile --tag my-image-name:$(date +%s)
