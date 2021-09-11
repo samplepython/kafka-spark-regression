@@ -1,0 +1,2 @@
+export PATH=$PATH:/home/kafkauser/spark-2.4.3-bin-hadoop2.7/bin
+export PYSPARK_PYTHON=python3

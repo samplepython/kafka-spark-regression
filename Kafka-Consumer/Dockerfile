@@ -24,15 +24,13 @@ USER kafkauser
 RUN scala -version
 RUN pip3 install pyspark==2.4.6
 RUN pip3 list | grep spark
-#RUN echo "export PATH=$PATH:/home/kafkauser/spark-2.4.3-bin-hadoop2.7/bin" >> ~/.bashrc
-RUN echo export PATH=$PATH:/home/kafkauser/spark-2.4.3-bin-hadoop2.7/bin
-#RUN echo "export PYSPARK_PYTHON=python3" >> ~/.bashrc
-RUN export PYSPARK_PYTHON=python3
-#RUN . ~/.bashrc
-RUN echo $PATH
-RUN pyspark
-RUN exit
+RUN unset SPARK_HOME && printenv SPARK_HOME || echo "unset success"
+RUN echo $SPARK_HOME 
+ENV SPARK_HOME=/home/kafkauser/spark-2.4.3-bin-hadoop2.7
+RUN echo $SPARK_HOME 
+ENV PATH=$PATH:$SPARK_HOME/bin
+RUN echo $PATH 
+ENV PYSPARK_PYTHON=python3
+RUN echo $PYSPARK_PYTHON
+RUN pyspark &
 RUN ls
-
-
-RUN python spark-submit --jars /home/kafkauser/Kafka-Consumer/src/spark-streaming-kafka-0-8-assembly_2.11-2.4.8.jar /home/kafkauser/Kafka-Consumer/src/HousePredictionConsumer.py
