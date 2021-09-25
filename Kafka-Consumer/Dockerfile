@@ -5,11 +5,11 @@ USER kafkauser
 
 WORKDIR /home/kafkauser
 
-COPY Kafka-Consumer/requirements.txt .
+COPY ./requirements.txt .
 
 RUN pip install -r requirements.txt && rm requirements.txt
 
-COPY Kafka-Consumer/src .
+COPY ./src .
 
 
 RUN pwd
@@ -34,3 +34,5 @@ ENV PYSPARK_PYTHON=python3
 RUN echo $PYSPARK_PYTHON
 RUN pyspark &
 RUN ls
+
+ENTRYPOINT spark-submit --jars ./spark-streaming-kafka-0-8-assembly_2.11-2.4.8.jar ./HousePredictionConsumer.py
